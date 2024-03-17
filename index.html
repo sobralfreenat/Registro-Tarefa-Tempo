@@ -1,412 +1,286 @@
 <!DOCTYPE html>
-<html  >
+<html lang="pt-BR">
+
 <head>
-  
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
-  <link rel="shortcut icon" href="assets/images/oximag-logo-1-121x121.jpg" type="image/x-icon">
-  <meta name="description" content="">
-  
-  
-  <title>Home</title>
-  <link rel="stylesheet" href="assets/web/assets/mobirise-icons/mobirise-icons.css">
-  <link rel="stylesheet" href="assets/web/assets/mobirise-icons2/mobirise2.css">
-  <link rel="stylesheet" href="assets/tether/tether.min.css">
-  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-grid.min.css">
-  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-reboot.min.css">
-  <link rel="stylesheet" href="assets/dropdown/css/style.css">
-  <link rel="stylesheet" href="assets/formstyler/jquery.formstyler.css">
-  <link rel="stylesheet" href="assets/formstyler/jquery.formstyler.theme.css">
-  <link rel="stylesheet" href="assets/datepicker/jquery.datetimepicker.min.css">
-  <link rel="stylesheet" href="assets/socicon/css/styles.css">
-  <link rel="stylesheet" href="assets/theme/css/style.css">
-  <link rel="stylesheet" href="assets/recaptcha.css">
-  <link rel="preload" as="style" href="assets/mobirise/css/mbr-additional.css"><link rel="stylesheet" href="assets/mobirise/css/mbr-additional.css" type="text/css">
-  
-  
-  
-  
-<meta name="theme-color" content="#12294b">
-<link rel="manifest" href="manifest.json">
-<script src="sw-connect.js"></script>
-<meta name="apple-mobile-web-app-capable" content="yes">
-<link rel="apple-touch-startup-image" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="assets/images/apple-launch-640x1136.png">
-<link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="assets/images/apple-launch-750x1334.png">
-<link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="assets/images/apple-launch-1242x2208.png">
-<link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="assets/images/apple-launch-1125x2436.png">
-<link rel="apple-touch-startup-image" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="assets/images/apple-launch-1536x2048.png">
-<link rel="apple-touch-startup-image" media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="assets/images/apple-launch-1668x2224.png">
-<link rel="apple-touch-startup-image" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="assets/images/apple-launch-2048x2732.png">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="EOXIDEV">
-<link rel="apple-touch-icon" href="apple-touch-icon.png"></head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Conversão</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid rgb(71, 71, 71);
+            border-collapse: collapse;
+            padding: 10px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        button,
+        input,
+        select {
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .excluido {
+            background-color: #eee;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+
 <body>
-  
-  <section class="menu2 businessm4_menu2 menu cid-shdB1J7TES" once="menu" id="menu2-1">
 
-	
+        <div>
+    Projeto: <input type="text" id="projeto">
+    Tópico: <input type="text" id="topico">
+    Tarefa: <input type="text" id="tarefa">
+    <br>
+    Status:
+    <select id="status">
+        <option value="Em andamento 1">Em andamento 1</option>
+        <option value="Pausa 2">Pausa 2</option>
+        <option value="Encerrado 3">Encerrado 3</option>
+    </select>
+    <br>
+    Minutos: <input type="number" id="minutos" placeholder="Ex.: 8">
+    Segundos: <input type="number" id="segundos" placeholder="Ex.: 56">
+    <br>
+    <button onclick="iniciarCronometro()">Start Time</button>
+    <button onclick="pararCronometro()">End Time</button>
+    <button onclick="reiniciarTempo()">Reiniciar Tempo</button>
+    <div id="cronometro">0m0s</div>
+    <br>
+    <button onclick="adicionar()">Adicionar</button>
+    <button onclick="reiniciar()">Reiniciar</button>
+    <br>
+    <button onclick="salvarJSON()">Salvar JSON</button>
+    <button onclick="carregarJSON()">Carregar JSON</button>
+    <input type="file" id="arquivoJSON" style="display: none;" onchange="lerArquivo(event)">
+    <br>
+    <button onclick="carregarMultiplosJSONs()">Carregar Múltiplos JSONs</button>
+    <input type="file" id="multiplosJSON" multiple style="display: none;" onchange="lerMultiplosArquivos(event)">
+</div>
 
 
-	<nav class="navbar navbar-dropdown navbar-fixed-top navbar-expand-lg">
-		<div class="navbar-brand">
-			<span class="navbar-logo">
-				<a href="#">
-					<img src="assets/images/oximag-logo-1-121x121.jpg" alt="" style="height: 3.8rem;">
-				</a>
-			</span>
-			<span class="navbar-caption-wrap"><a class="navbar-caption text-secondary display-2" href="#">
-					EOXIDEV - PANEL</a></span>
-		</div>
-		
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav nav-dropdown nav-right" data-app-modern-menu="true"><li class="nav-item">
-					<a class="nav-link link text-white display-4" href="#">
-						Home
-					</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link link text-white display-4" href="#">
-						Services
-					</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link link text-white display-4" href="#">
-						About Us
-					</a>
-				</li></ul>
-			
-			
-		</div>
-	</nav>
-</section>
+    <table>
+        <thead>
+            <tr>
+                <th>Projeto</th>
+                <th>Tópico</th>
+                <th>Tarefa</th>
+                <th>Status</th>
+                <th>Início</th>
+                <th>Minutos (exato)</th>
+                <th>Horas</th>
+                <th>Ação</th>
+                <th>Toggle</th>
+            </tr>
+        </thead>
+        <tbody id="tabelaResultados">
+        </tbody>
+    </table>
 
-<section class="features10 businessm4_features10 cid-shdq9YXg35 mbr-parallax-background" id="features10-0">
+    <p>
+        Total em Minutos: <span id="totalMinutos">0m0s</span><br>
+        Total em Horas: <span id="totalHoras">0.0000</span>
+    </p>
 
-	
+    <script>
+         let dados = [];
+        let somaMinutos = 0;
+        let cronometroIntervalo;
+        let minutosCronometro = 0;
+        let segundosCronometro = 0;
+        let nomeDoProjetoAnterior = "";
 
-	<div class="mbr-overlay" style="opacity: 0.8; background-color: rgb(37, 22, 3);">
-	</div>
+        function adicionar() {
+            const projeto = document.getElementById("projeto").value;
+            const topico = document.getElementById("topico").value;
+            const tarefa = document.getElementById("tarefa").value;
+            const status = document.getElementById("status").value;
+            const minutos = parseInt(document.getElementById("minutos").value, 10) || 0;
+            const segundos = parseInt(document.getElementById("segundos").value, 10) || 0;
 
-	<div class="container">
-		
-		
+            const início = minutos + "m" + segundos;
+            const totalMinutos = minutos + (segundos / 60);
 
-		<div class="rows-wrapper">
-			<div class="row main align-items-center top-radius">
-				<div class="col-md-4 text-element">
-					<div class="text-content">
-						<div class="card-img pb-3 align-center">
-							<span class="mbr-iconfont mobi-mbri-bulleted-list mobi-mbri"></span>
-						</div>
-						<h2 class="mbr-title mbr-fonts-style align-center display-5">ÍNDICE</h2>
-						<p class="mbr-text card-text mbr-light mbr-fonts-style align-center display-7"><a href="https://drive.google.com/drive/u/2/my-drive" class="text-primary">1- G Drive - eoxidev
-</a><br><a href="https://www.supersaas.com.br/schedule/freenatgroup/EOXIDEV?m=1" class="text-primary">2- Agenda Prioridades</a>
-<br><a href="https://elink.io/embed/946b10b" class="text-primary">3- Curadoria Cursos</a>
-<br><a href="https://app.diagrams.net/#G1NBwiAwYwbdu86AKKNHr4z7Pi_KXYfmrh" class="text-primary">4- Diagramas - Mapas</a>
-<br><a href="index.html#features11-4" class="text-primary">5- ACESSOS
-</a><br><a href="index.html#clients2-2" class="text-primary">6- Tópicos Suporte</a>
-<br><a href="index.html#formbuilder-3" class="text-primary">7- Formulário Ocorrências (Beta)</a>&nbsp;<br></p>
-						<div class="mbr-section-btn align-center"><a class="btn-underline mr-3 text-info text-primary display-4" href="index.html#features11-4">NEXT</a></div>
-					</div>
-				</div>
-				<div class="col-md-4 image-element align-self-stretch">
-					<div class="img-wrap">
-						<img src="assets/images/11.jpg" alt="">
-					</div>
-				</div>
-				<div class="col-md-4 text-element">
-					<div class="text-content">
-						<div class="card-img pb-3 align-center">
-							<span class="mbr-iconfont mobi-mbri-calendar mobi-mbri"></span>
-						</div>
-						<h2 class="mbr-title mbr-fonts-style align-center display-5">
-							Agenda - Prioridades</h2>
-						<p class="mbr-text card-text mbr-light mbr-fonts-style align-center display-7"><strong>consultar agendamentos</strong>&nbsp;</p>
-						<div class="mbr-section-btn align-center"><a class="btn-underline mr-3 text-info text-primary display-4" href="https://www.supersaas.com.br/schedule/freenatgroup/EOXIDEV?m=1">link aqui</a></div>
-					</div>
-				</div>
-			</div>
-			<div class="row main-reverse align-items-center bottom-radius">
-				<div class="col-md-4 image-element align-self-stretch">
-					<div class="img-wrap">
-						<a href="https://app.diagrams.net/#G1NBwiAwYwbdu86AKKNHr4z7Pi_KXYfmrh"><img src="assets/images/mbr-1-738x521.jpg" alt=""></a>
-					</div>
-				</div>
-				<div class="col-md-4 text-element">
-					<div class="text-content">
-						<div class="card-img pb-3 align-center">
-							<span class="mbr-iconfont mobi-mbri-folder mobi-mbri"></span>
-						</div>
-						<h2 class="mbr-title mbr-fonts-style align-center display-5">G-Drive Geral</h2>
-						<p class="mbr-text card-text mbr-light mbr-fonts-style align-center display-7">
-							<a href="https://drive.google.com/drive/u/2/my-drive" class="text-primary">1-&nbsp;G Drive - eoxidev</a><br><strong><a href="index.html#clients2-2" class="text-primary"><br></a></strong><a href="https://app.diagrams.net/#G1NBwiAwYwbdu86AKKNHr4z7Pi_KXYfmrh" class="text-primary"><br></a><br></p>
-						<div class="mbr-section-btn align-center"><a class="btn-underline mr-3 text-info display-4" href="#">&lt; INICIO</a> <a class="btn-underline mr-3 text-info text-primary display-4" href="index.html#features11-4">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;PROX&gt;</a></div>
-					</div>
-				</div>
-				<div class="col-md-4 image-element align-self-stretch">
-					<div class="img-wrap">
-						<a href="https://elink.io/embed/946b10b"><img src="assets/images/12.jpg" alt=""></a>
-					</div>
-				</div>
-			</div>
-			
-			
-		</div>
-	</div>
-</section>
+            dados.push({ projeto, topico, tarefa, status, início, totalMinutos, incluido: true });
 
-<section class="features11 businessm4_features11 cid-shdR048GF7 mbr-parallax-background" id="features11-4">
+            atualizarTabela();
+            atualizarTotais();
+        }
 
-	
+        function iniciarCronometro() {
+            cronometroIntervalo = setInterval(function() {
+                segundosCronometro++;
+                if (segundosCronometro >= 60) {
+                    minutosCronometro++;
+                    segundosCronometro = 0;
+                }
+                document.getElementById("cronometro").innerText = minutosCronometro + "m" + segundosCronometro + "s";
+            }, 1000);
+        }
 
-	<div class="mbr-overlay" style="opacity: 0.6; background-color: rgb(18, 41, 75);">
-	</div>
+        function pararCronometro() {
+            clearInterval(cronometroIntervalo);
+            document.getElementById("minutos").value = minutosCronometro;
+            document.getElementById("segundos").value = segundosCronometro;
+        }
 
-	<div class="container">
-		<h2 class="mbr-fonts-style mbr-section-title align-center display-2">INCLUIR ACESSOS</h2>
-		
-		<div class="row justify-content-center pt-4">
-			<div class="col-md-6 col-lg-3 row-item">
-				<div class="wrapper">
-					<div class="card-img pb-3 align-center">
-						
-					</div>
-					<h4 class="mbr-fonts-style mbr-card-title align-center display-7">MANUFATURA<br>PRODUÇÃO<br>VENDAS</h4>
-				</div>
-			</div>
-			<div class="col-md-6 col-lg-3 row-item">
-				<div class="wrapper">
-					<div class="card-img pb-3 align-center">
-						
-					</div>
-					<h4 class="mbr-fonts-style mbr-card-title align-center display-7">EVENTOS<br>COMUNICAÇÃO<br>CONQUISTAS</h4>
-				</div>
-			</div>
-			<div class="col-md-6 col-lg-3 row-item">
-				<div class="wrapper">
-					<div class="card-img pb-3 align-center">
-						
-					</div>
-					<h4 class="mbr-fonts-style mbr-card-title align-center display-7">TREINAMENTO<br>DESENVOLVIMENTO<br>PERFOMANCE</h4>
-				</div>
-			</div>
-			<div class="col-md-6 col-lg-3 row-item">
-				<div class="wrapper">
-					<div class="card-img pb-3 align-center">
-						
-					</div>
-					<h4 class="mbr-fonts-style mbr-card-title align-center display-7">VISÃO MACRO<br>MVV<br>PROPÓSITO</h4>
-				</div>
-			</div>
-			<div class="col-md-6 col-lg-3 row-item">
-				<div class="wrapper">
-					<div class="card-img pb-3 align-center">
-						
-					</div>
-					<h4 class="mbr-fonts-style mbr-card-title align-center display-7">ESTÁGIOS<br>LÍDERES<br>CARRERAS</h4>
-				</div>
-			</div>
-			<div class="col-md-6 col-lg-3 row-item">
-				<div class="wrapper">
-					<div class="card-img pb-3 align-center">
-						
-					</div>
-					<h4 class="mbr-fonts-style mbr-card-title align-center display-7">RENOVAÇÃO<br>RH<br>SUPERVISÃO</h4>
-				</div>
-			</div>
-			<div class="col-md-6 col-lg-3 row-item">
-				<div class="wrapper">
-					<div class="card-img pb-3 align-center">
-						
-					</div>
-					<h4 class="mbr-fonts-style mbr-card-title align-center display-7">PESSOAS<br>PROCESSOS<br>PRODUTOS</h4>
-				</div>
-			</div>
-			<div class="col-md-6 col-lg-3 row-item">
-				<div class="wrapper">
-					<div class="card-img pb-3 align-center">
-						
-					</div>
-					<h4 class="mbr-fonts-style mbr-card-title align-center display-7">INSIGHTS<br>INSIGHTS<br>INSIGHTS</h4>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
+        function atualizarTabela() {
+            const tabelaResultados = document.getElementById("tabelaResultados");
+            tabelaResultados.innerHTML = "";
 
-<section class="clients2 businessm4_clients2 cid-shdF1VtQZT" id="clients2-2">
+            dados.forEach((dado, index) => {
+                const linha = document.createElement("tr");
+                linha.innerHTML = `
+                    <td>${dado.projeto}</td>
+                    <td>${dado.topico}</td>
+                    <td>${dado.tarefa}</td>
+                    <td>${dado.status}</td>
+                    <td>${dado.início}</td>
+                    <td>${dado.totalMinutos.toFixed(2)}</td>
+                    <td>${(dado.totalMinutos / 60).toFixed(4)}</td>
+                    <td><button onclick="remover(${index})">Remover</button></td>
+                    <td><button onclick="toggle(${index})">${dado.incluido ? 'Excluir' : 'Incluir'}</button></td>
+                `;
+                if (!dado.incluido) {
+                    linha.classList.add('excluido');
+                }
+                tabelaResultados.appendChild(linha);
+            });
+        }
 
-	
+        function atualizarTotais() {
+            somaMinutos = 0;
+            dados.forEach(dado => {
+                if (dado.incluido) {
+                    somaMinutos += dado.totalMinutos;
+                }
+            });
 
-	
+            document.getElementById("totalMinutos").innerText = Math.floor(somaMinutos) + "m" + Math.round((somaMinutos % 1) * 60) + "s";
+            document.getElementById("totalHoras").innerText = (somaMinutos / 60).toFixed(4);
+        }
 
-	<div class="container mb-4">
-		<div class="media-container-row">
-			<div class="col-12 align-center">
-				<h2 class="mbr-section-title pb-2 mbr-fonts-style display-2">
-					TÓPICOS SUPORTE</h2>
-				
-			</div>
-		</div>
-	</div>
-	<div class="container">
-		<div class="row align-center justify-content-center">
-			<div class="p-3 col-12 col-md-6 col-lg-3">
-				<div class="client-wrapper">
-					<div class="wrap-img">
-						<img src="assets/images/cnc-simulator-image-506x262.jpg" class="img-responsive clients-img" alt="">
-					</div>
-					<div class="card-box">
-						<h3 class="client-name mbr-fonts-style display-5">Analise de Prioridade</h3>
-						
-					</div>
-				</div>
-			</div>
-			<div class="p-3 col-12 col-md-6 col-lg-3">
-				<div class="client-wrapper">
-					<div class="wrap-img">
-						<img src="assets/images/opcao-capa-posicionamento-favoravelt-480x252.jpg" class="img-responsive clients-img" alt="">
-					</div>
-					<div class="card-box">
-						<h3 class="client-name mbr-fonts-style display-5">Estratégia</h3>
-						
-					</div>
-				</div>
-			</div>
-			<div class="p-3 col-12 col-md-6 col-lg-3">
-				<div class="client-wrapper">
-					<div class="wrap-img">
-						<img src="assets/images/plano-tatico-fnw-240x112.jpg" class="img-responsive clients-img" alt="">
-					</div>
-					<div class="card-box">
-						<h3 class="client-name mbr-fonts-style display-5">
-							Tática</h3>
-						
-					</div>
-				</div>
-			</div>
-			<div class="p-3 col-12 col-md-6 col-lg-3">
-				<div class="client-wrapper">
-					<div class="wrap-img">
-						<img src="assets/images/pic-curso-e-modulos-240x100.jpg" class="img-responsive clients-img" alt="">
-					</div>
-					<div class="card-box">
-						<h3 class="client-name mbr-fonts-style display-5">
-							Oper. Liderança</h3>
-						
-					</div>
-				</div>
-			</div>
-			
-			
+        function remover(index) {
+            dados.splice(index, 1);
+            atualizarTabela();
+            atualizarTotais();
+        }
 
-			
+        function toggle(index) {
+            dados[index].incluido = !dados[index].incluido;
+            atualizarTabela();
+            atualizarTotais();
+        }
 
-			
-		</div>
-	</div>
-</section>
+        function reiniciar() {
+            dados = [];
+            atualizarTabela();
+            atualizarTotais();
+        }
 
-<section class="form cid-shdIJWSdUO" id="formbuilder-3">
+    function salvarJSON() {
+    const jsonDados = JSON.stringify(dados);
+    const blob = new Blob([jsonDados], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
     
+    // Obtém os valores dos campos e os utiliza para nomear o arquivo
+    const projeto = document.getElementById("projeto").value;
+    const topico = document.getElementById("topico").value;
+    const tarefa = document.getElementById("tarefa").value;
     
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 mx-auto mbr-form" data-form-type="formoid">
-<!--Formbuilder Form-->
-<form action="https://mobirise.eu/" method="POST" class="mbr-form form-with-styler" data-form-title="Registro de Ocorrência "><input type="hidden" name="email" data-form-email="true" value="CC6na+IGUmdvPAYu2u1n5vLYFHHbRjiUGrYwuaTd4ylvmlddNd8+PHAtDX/UNqFIjPNkc83iyvrBrdouJ/QQLhzbmxKJc8GljVBowmfa/5tiw3ObJfolbpVz6GwHrWHr">
-<div class="form-row">
-<div hidden="hidden" data-form-alert="" class="alert alert-success col-12">Agradecemos pelo envio!</div>
-<div hidden="hidden" data-form-alert-danger="" class="alert alert-danger col-12">Oops...! some problem!</div>
-</div>
-<div class="dragArea form-row">
-<div class="col-lg-12 col-md-12 col-sm-12" style="">
-<h4 class="mbr-fonts-style display-5">Controle de Ocorrência </h4>
-</div>
-<div class="col-lg-12 col-md-12 col-sm-12 form-group" data-for="Prioridade">
-<label for="Prioridade-formbuilder-3" class="form-control-label mbr-fonts-style display-7">Prioridade</label>
-<select name="Prioridade" data-form-field="Prioridade" required="required" class="form-control display-7" id="Prioridade-formbuilder-3">
-<option value="Selecione">Selecione</option>
-<option value="Alta">Alta</option>
-<option value="Média">Média</option>
-<option value="Analisar">Analisar</option>
-<option value="Option">Option</option>
-</select>
-</div>
-<div class="col-lg-12 col-md-12 col-sm-12">
-<hr>
-</div>
-<div data-for="name" class="col-lg-12 col-md-12 col-sm-12 form-group">
-<input type="text" name="name" placeholder="Nome" data-form-field="name" class="form-control display-7" required="required" value="" id="name-formbuilder-3">
-</div>
-<div data-for="text4" class="col-lg-12 col-md-12 col-sm-12 form-group">
-<input type="text" name="text4" placeholder="Setor" data-form-field="text4" class="form-control display-7" required="required" value="" id="text4-formbuilder-3">
-</div>
-<div data-for="text" class="col-lg-12 col-md-12 col-sm-12 form-group">
-<input type="text" name="text" placeholder="Cargo" data-form-field="text" required="required" class="form-control display-7" value="" id="text-formbuilder-3">
-</div>
-<div class="col-lg-12 col-md-12 col-sm-12 form-group" data-for="message">
-<textarea name="message" placeholder="Ocorrencia" data-form-field="message" required="required" class="form-control display-7" id="message-formbuilder-3"></textarea>
-</div>
-<div data-for="text1" class="col-lg-12 col-md-12 col-sm-12 form-group">
-<input type="text" name="text1" placeholder="Envolvdo 1" data-form-field="text1" class="form-control display-7" required="required" value="" id="text1-formbuilder-3">
-</div>
-<div data-for="text2" class="col-lg-12 col-md-12 col-sm-12 form-group">
-<input type="text" name="text2" placeholder="Envolvido 2 (Opcional)" data-form-field="text2" class="form-control display-7" value="" id="text2-formbuilder-3">
-</div>
-<div data-for="text3" class="col-lg-12 col-md-12 col-sm-12 form-group" style="">
-<input type="text" name="text3" placeholder="Envolvido 3 (opcional)" data-form-field="text3" class="form-control display-7" value="" id="text3-formbuilder-3">
-</div>
-<div class="col-auto"><button type="submit" class="btn btn-info display-7">Enviar</button></div>
-</div>
-</form><!--Formbuilder Form-->
-</div>
-        </div>
-    </div>
-</section>
-
-<section class="footer4 businessm4_footer4 cid-she4FpcMqz" id="footer4-5">
-
-	
-
-	
-
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12 text1 col-lg-6">
-				<p class="mbr-text mbr-bold links mbr-fonts-style align-left display-7"> POWERED BY FREENATWORK</p>
-			</div>
-			<div class="col-md-12 copyright align-right text2 col-lg-6">
-				<p class="mbr-text mbr-bold mbr-fonts-style display-5">
-					EOXIDEV PANEL</p>
-			</div>
-			<div class="col-lg-4 col-md-12">
-				
-			</div>
-		</div>
-	</div>
-</section>
+    // Se algum campo estiver vazio, usamos "desconhecido" como valor padrão
+    const nomeDoArquivo = `${projeto || "desconhecido"}_${topico || "desconhecido"}_${tarefa || "desconhecido"}.json`;
+    
+    a.download = nomeDoArquivo;
+    a.click();
+}
 
 
-<script src="assets/web/assets/jquery/jquery.min.js"></script>
-  <script src="assets/popper/popper.min.js"></script>
-  <script src="assets/tether/tether.min.js"></script>
-  <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-  <script src="assets/smoothscroll/smooth-scroll.js"></script>
-  <script src="assets/parallax/jarallax.min.js"></script>
-  <script src="assets/dropdown/js/nav-dropdown.js"></script>
-  <script src="assets/dropdown/js/navbar-dropdown.js"></script>
-  <script src="assets/touch-swipe/jquery.touch-swipe.min.js"></script>
-  <script src="assets/formstyler/jquery.formstyler.js"></script>
-  <script src="assets/formstyler/jquery.formstyler.min.js"></script>
-  <script src="assets/datepicker/jquery.datetimepicker.full.js"></script>
-  <script src="assets/theme/js/script.js"></script>
-  <script src="assets/formoid.min.js"></script>
-  
-  
-  
+
+        function carregarJSON() {
+            document.getElementById("arquivoJSON").click();
+        }
+
+        function lerArquivo(event) {
+    const arquivo = event.target.files[0];
+    if (arquivo) {
+        const leitor = new FileReader();
+        leitor.onload = function(e) {
+            dados = JSON.parse(e.target.result);
+            atualizarTabela();
+            atualizarTotais();
+        };
+        leitor.readAsText(arquivo);
+    }
+}  // <--- Esta é a chave que faltava.
+
+function carregarMultiplosJSONs() {
+    document.getElementById("multiplosJSON").click();
+}
+
+function lerMultiplosArquivos(event) {
+    const arquivos = event.target.files;
+    let contagemArquivos = arquivos.length;
+
+    Array.from(arquivos).forEach(arquivo => {
+        if (arquivo) {
+            const leitor = new FileReader();
+            leitor.onload = function(e) {
+                const dadosArquivo = JSON.parse(e.target.result);
+                dados = dados.concat(dadosArquivo);
+                contagemArquivos--;
+
+                if (contagemArquivos === 0) {
+                    atualizarTabela();
+                    atualizarTotais();
+                }
+            };
+            leitor.readAsText(arquivo);
+        }
+    });
+}
+function reiniciarTempo() {
+    clearInterval(cronometroIntervalo);
+    minutosCronometro = 0;
+    segundosCronometro = 0;
+    document.getElementById("cronometro").innerText = "0m0s";
+    document.getElementById("minutos").value = "";
+    document.getElementById("segundos").value = "";
+}
+
+    document.getElementById('projeto').addEventListener('change', function() {
+        const resposta = confirm('Você deseja salvar o projeto atual antes de mudar?');
+        if (resposta) {
+            salvarJSON();
+        } else {
+            // Reverter a mudança feita pelo usuário e restaurar o nome do projeto anterior.
+            this.value = nomeDoProjetoAnterior;
+        }
+    });
+
+    document.getElementById('projeto').addEventListener('focus', function() {
+        // Armazena o nome atual do projeto quando o campo recebe foco. 
+        // Isso nos dá um ponto de referência para comparar quando o campo é alterado.
+        nomeDoProjetoAnterior = this.value;
+    });
+
+</script>      
+    </script>
+
 </body>
+
 </html>
