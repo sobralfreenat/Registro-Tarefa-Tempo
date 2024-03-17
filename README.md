@@ -1,2 +1,0 @@
-# eoxidev
-eoxidev scope
