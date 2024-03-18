@@ -34,42 +34,82 @@
             background-color: #eee;
             text-decoration: line-through;
         }
+
+        /* Estilos para os botões Salvar JSON e Carregar JSON */
+        #botaoSalvarJSON {
+            width: 150px;
+            padding: 10px;
+            background-color: #1b0bff;
+            color: rgb(255, 255, 255);
+            border: 1px solid black; /* Adicionando borda preta de 1px */
+            border-radius: 0; /* Tornando os botões retos */
+            cursor: pointer;
+            margin-right: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        #botaoCarregarJSON {
+            width: 150px;
+            padding: 10px;
+            background-color: #c22fc7;
+            color: rgb(255, 255, 255);
+            border: 1px solid black; /* Adicionando borda preta de 1px */
+            border-radius: 0; /* Tornando os botões retos */
+            cursor: pointer;
+            margin-right: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        #botaoSalvarJSON:hover {
+            background-color: #0056b3;
+        }
+
+        #botaoCarregarJSON:hover {
+            background-color: #780e69;
+        }
     </style>
 </head>
 
 <body>
 
-        <div>
-    Projeto: <input type="text" id="projeto">
-    Tópico: <input type="text" id="topico">
-    Tarefa: <input type="text" id="tarefa">
-    <br>
-    Status:
-    <select id="status">
-        <option value="Em andamento 1">Em andamento 1</option>
-        <option value="Pausa 2">Pausa 2</option>
-        <option value="Encerrado 3">Encerrado 3</option>
-    </select>
-    <br>
-    Minutos: <input type="number" id="minutos" placeholder="Ex.: 8">
-    Segundos: <input type="number" id="segundos" placeholder="Ex.: 56">
-    <br>
-    <button onclick="iniciarCronometro()">Start Time</button>
-    <button onclick="pararCronometro()">End Time</button>
-    <button onclick="reiniciarTempo()">Reiniciar Tempo</button>
-    <div id="cronometro">0m0s</div>
-    <br>
-    <button onclick="adicionar()">Adicionar</button>
-    <button onclick="reiniciar()">Reiniciar</button>
-    <br>
-    <button onclick="salvarJSON()">Salvar JSON</button>
-    <button onclick="carregarJSON()">Carregar JSON</button>
-    <input type="file" id="arquivoJSON" style="display: none;" onchange="lerArquivo(event)">
-    <br>
-    <button onclick="carregarMultiplosJSONs()">Carregar Múltiplos JSONs</button>
-    <input type="file" id="multiplosJSON" multiple style="display: none;" onchange="lerMultiplosArquivos(event)">
-</div>
+		<h1></h1><strong>REGISTRO TAREFAS /TEMPO</strong><br><br>
+    <div>
+        Projeto: <input type="text" id="projeto">
+        Tópico: <input type="text" id="topico">
+        Tarefa: <input type="text" id="tarefa">
+        <br>
+        Status:
+        <select id="status">
+            <option value="Em andamento 1">Em andamento 1</option>
+            <option value="Pausa 2">Pausa 2</option>
+            <option value="Encerrado 3">Encerrado 3</option>
+        </select>
+        <br>
+        Minutos: <input type="number" id="minutos" placeholder="Ex.: 8">
+        Segundos: <input type="number" id="segundos" placeholder="Ex.: 56">
+        <br>
+        <button onclick="iniciarCronometro()">Start Time</button>
+        <button onclick="pararCronometro()">End Time</button>
+        <button onclick="reiniciarTempo()">Reiniciar Tempo</button>
+        <div id="cronometro">0m0s</div>
+        <br>
+        <button onclick="adicionar()">Adicionar</button>
+        <button onclick="reiniciar()">Reiniciar</button>
+        <br>
+        <button id="botaoSalvarJSON" onclick="solicitarNomeArquivo()">Salvar Registro</button>
+        <button id="botaoCarregarJSON" onclick="carregarJSON()">Carregar Registro</button>
+        <input type="file" id="arquivoJSON" style="display: none;" onchange="lerArquivo(event)">
+        <br>
+        <button onclick="carregarMultiplosJSONs()">Carregar Múltiplos Registros</button>
+        <input type="file" id="multiplosJSON" multiple style="display: none;" onchange="lerMultiplosArquivos(event)">
+    </div>
 
+    <!-- Botões para salvar e carregar estado -->
+   <!--  <div style="text-align: center;">
+        <button onclick="salvarEstado()" style="width: 150px; padding: 10px; background-color: #1b0bff; color: rgb(255, 255, 255);">Salvar Estado</button>
+        <input type="file" id="fileInput" style="display: none;" onchange="carregarEstado(event)">
+        <button onclick="document.getElementById('fileInput').click()" style="width: 150px; padding: 10px; background-color: #c22fc7; color: white;">Carregar Estado</button>
+    </div>-->
 
     <table>
         <thead>
@@ -95,7 +135,7 @@
     </p>
 
     <script>
-         let dados = [];
+        let dados = [];
         let somaMinutos = 0;
         let cronometroIntervalo;
         let minutosCronometro = 0;
@@ -120,7 +160,7 @@
         }
 
         function iniciarCronometro() {
-            cronometroIntervalo = setInterval(function() {
+            cronometroIntervalo = setInterval(function () {
                 segundosCronometro++;
                 if (segundosCronometro >= 60) {
                     minutosCronometro++;
@@ -190,95 +230,91 @@
             atualizarTotais();
         }
 
-    function salvarJSON() {
-    const jsonDados = JSON.stringify(dados);
-    const blob = new Blob([jsonDados], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    
-    // Obtém os valores dos campos e os utiliza para nomear o arquivo
-    const projeto = document.getElementById("projeto").value;
-    const topico = document.getElementById("topico").value;
-    const tarefa = document.getElementById("tarefa").value;
-    
-    // Se algum campo estiver vazio, usamos "desconhecido" como valor padrão
-    const nomeDoArquivo = `${projeto || "desconhecido"}_${topico || "desconhecido"}_${tarefa || "desconhecido"}.json`;
-    
-    a.download = nomeDoArquivo;
-    a.click();
-}
+        function solicitarNomeArquivo() {
+            // Solicita ao usuário o nome do arquivo antes de salvar o JSON
+            const nomeDoArquivo = prompt("Por favor, insira o nome do arquivo:", "dados.json");
+            if (nomeDoArquivo) {
+                salvarJSON(nomeDoArquivo);
+            }
+        }
 
-
+        function salvarJSON(nomeDoArquivo) {
+            const jsonDados = JSON.stringify(dados);
+            const blob = new Blob([jsonDados], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = nomeDoArquivo || "dados.json";
+            a.click();
+        }
 
         function carregarJSON() {
             document.getElementById("arquivoJSON").click();
         }
 
         function lerArquivo(event) {
-    const arquivo = event.target.files[0];
-    if (arquivo) {
-        const leitor = new FileReader();
-        leitor.onload = function(e) {
-            dados = JSON.parse(e.target.result);
-            atualizarTabela();
-            atualizarTotais();
-        };
-        leitor.readAsText(arquivo);
-    }
-}  // <--- Esta é a chave que faltava.
-
-function carregarMultiplosJSONs() {
-    document.getElementById("multiplosJSON").click();
-}
-
-function lerMultiplosArquivos(event) {
-    const arquivos = event.target.files;
-    let contagemArquivos = arquivos.length;
-
-    Array.from(arquivos).forEach(arquivo => {
-        if (arquivo) {
-            const leitor = new FileReader();
-            leitor.onload = function(e) {
-                const dadosArquivo = JSON.parse(e.target.result);
-                dados = dados.concat(dadosArquivo);
-                contagemArquivos--;
-
-                if (contagemArquivos === 0) {
+            const arquivo = event.target.files[0];
+            if (arquivo) {
+                const leitor = new FileReader();
+                leitor.onload = function (e) {
+                    dados = JSON.parse(e.target.result);
                     atualizarTabela();
                     atualizarTotais();
+                };
+                leitor.readAsText(arquivo);
+            }
+        }
+
+        function carregarMultiplosJSONs() {
+            document.getElementById("multiplosJSON").click();
+        }
+
+        function lerMultiplosArquivos(event) {
+            const arquivos = event.target.files;
+            let contagemArquivos = arquivos.length;
+
+            Array.from(arquivos).forEach(arquivo => {
+                if (arquivo) {
+                    const leitor = new FileReader();
+                    leitor.onload = function (e) {
+                        const dadosArquivo = JSON.parse(e.target.result);
+                        dados = dados.concat(dadosArquivo);
+                        contagemArquivos--;
+
+                        if (contagemArquivos === 0) {
+                            atualizarTabela();
+                            atualizarTotais();
+                        }
+                    };
+                    leitor.readAsText(arquivo);
                 }
-            };
-            leitor.readAsText(arquivo);
+            });
         }
-    });
-}
-function reiniciarTempo() {
-    clearInterval(cronometroIntervalo);
-    minutosCronometro = 0;
-    segundosCronometro = 0;
-    document.getElementById("cronometro").innerText = "0m0s";
-    document.getElementById("minutos").value = "";
-    document.getElementById("segundos").value = "";
-}
 
-    document.getElementById('projeto').addEventListener('change', function() {
-        const resposta = confirm('Você deseja salvar o projeto atual antes de mudar?');
-        if (resposta) {
-            salvarJSON();
-        } else {
-            // Reverter a mudança feita pelo usuário e restaurar o nome do projeto anterior.
-            this.value = nomeDoProjetoAnterior;
+        function reiniciarTempo() {
+            clearInterval(cronometroIntervalo);
+            minutosCronometro = 0;
+            segundosCronometro = 0;
+            document.getElementById("cronometro").innerText = "0m0s";
+            document.getElementById("minutos").value = "";
+            document.getElementById("segundos").value = "";
         }
-    });
 
-    document.getElementById('projeto').addEventListener('focus', function() {
-        // Armazena o nome atual do projeto quando o campo recebe foco. 
-        // Isso nos dá um ponto de referência para comparar quando o campo é alterado.
-        nomeDoProjetoAnterior = this.value;
-    });
+        document.getElementById('projeto').addEventListener('change', function () {
+            const resposta = confirm('Você deseja salvar o projeto atual antes de mudar?');
+            if (resposta) {
+                solicitarNomeArquivo();
+            } else {
+                // Reverter a mudança feita pelo usuário e restaurar o nome do projeto anterior.
+                this.value = nomeDoProjetoAnterior;
+            }
+        });
 
-</script>      
+        document.getElementById('projeto').addEventListener('focus', function () {
+            // Armazena o nome atual do projeto quando o campo recebe foco. 
+            // Isso nos dá um ponto de referência para comparar quando o campo é alterado.
+            nomeDoProjetoAnterior = this.value;
+        });
     </script>
 
 </body>
